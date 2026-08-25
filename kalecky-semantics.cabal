@@ -54,6 +54,7 @@ library
     Kalecky.Types.Prices.Wage
     Kalecky.Types.Valuation
     Kalecky.Types.Units.CompoundUnit
+    Kalecky.Types.Units.IndexUnit
     Kalecky.Types.Units.LaborUnit
     Kalecky.Types.Units.MoneyUnit
     Kalecky.Types.Units.TimeUnit
@@ -81,6 +82,7 @@ test-suite kalecky-test
     Kalecky.Types.Prices.WageSpec
     Kalecky.Types.ValuationSpec
     Kalecky.Types.Units.CompoundUnitSpec
+    Kalecky.Types.Units.IndexUnitSpec
     Kalecky.Types.Units.LaborUnitSpec
     Kalecky.Types.Units.MoneyUnitSpec
     Kalecky.Types.Units.TimeUnitSpec

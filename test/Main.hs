@@ -15,6 +15,7 @@ import Kalecky.Types.NumericsSpec (scaleTests)
 import Kalecky.Types.Prices.PriceSpec (priceTests)
 import Kalecky.Types.Prices.WageSpec (wageTests)
 import Kalecky.Types.Units.CompoundUnitSpec (compoundUnitTests)
+import Kalecky.Types.Units.IndexUnitSpec (indexUnitTests)
 import Kalecky.Types.ValuationSpec (valuationTests)
 import Kalecky.Types.Units.LaborUnitSpec (laborUnitTests)
 import Kalecky.Types.Units.MoneyUnitSpec (moneyUnitTests)
@@ -45,4 +46,5 @@ tests =
     , wageTests
     , casoPruebaTests
     , wageSettingTests
+    , indexUnitTests
     ]
