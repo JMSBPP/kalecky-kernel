@@ -1,66 +1,43 @@
-## Foundry
+# kalecky-semantics
 
-**Foundry is a blazing fast, portable and modular toolkit for Ethereum application development written in Rust.**
+A typed system for Kaleckian income distribution, in Haskell.
 
-Foundry consists of:
+**Core value:** ill-formed economics must not type-check. Currencies,
+dimensions, valuations and agents' expectation measures are type-level
+distinctions; amounts are exact (Natural / Rational) — no floats anywhere.
 
-- **Forge**: Ethereum testing framework (like Truffle, Hardhat and DappTools).
-- **Cast**: Swiss army knife for interacting with EVM smart contracts, sending transactions and getting chain data.
-- **Anvil**: Local Ethereum node, akin to Ganache, Hardhat Network.
-- **Chisel**: Fast, utilitarian, and verbose solidity REPL.
+The v1.0 end goal — the Blecker-Setterfield wage-setting equation —
+composes from the library's own combinators with no ad-hoc glue:
 
-## Documentation
-
-https://book.getfoundry.sh/
-
-## Usage
-
-### Build
-
-```shell
-$ forge build
+```haskell
+nominalWageGrowthFrom rm1 householdGap rm2 productivityGrowth ind inflation
+  = growthRate ( applyResponse rm1 (evalGap householdGap)
+               + applyResponse rm2 (rate productivityGrowth)
+               + applyIndexation ind inflation )
 ```
 
-### Test
+## Layout
 
-```shell
-$ forge test
+```
+src/Kalecky/
+├── Types/        Numerics (Scale), Currency, Valuation, Measure,
+│   ├── Units/    Unit, MoneyUnit, LaborUnit, TimeUnit, CompoundUnit
+│   └── Prices/   Price, PriceIndex, Wage
+├── Operators/    Expectation, Gap, Delta, GrowthRate, Effect,
+│                 Conflict, ResponseMultiplier, Indexation
+└── Equations/    WageSetting
+test/             mirrors src; test/should-fail/ holds compile-fail boundaries
+notes/            the specification (INCOME_DISTRIBUTION.md)
 ```
 
-### Format
+## Build & verify
 
-```shell
-$ forge fmt
+```sh
+stack test                       # property laws + worked examples
+scripts/check-compile-fail.sh    # every should-fail file must be rejected
 ```
 
-### Gas Snapshots
+## Status
 
-```shell
-$ forge snapshot
-```
-
-### Anvil
-
-```shell
-$ anvil
-```
-
-### Deploy
-
-```shell
-$ forge script script/Counter.s.sol:CounterScript --rpc-url <your_rpc_url> --private-key <your_private_key>
-```
-
-### Cast
-
-```shell
-$ cast <subcommand>
-```
-
-### Help
-
-```shell
-$ forge --help
-$ anvil --help
-$ cast --help
-```
+v1.0 shipped: see `.planning/MILESTONES.md`. Planning artifacts live in
+`.planning/` (GSD).

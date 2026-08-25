@@ -29,31 +29,18 @@ v1 is done when this equation (marked "This is the end goal test" in `notes/INCO
 
 - ✓ v1.0 Wage Equation (all Active items below shipped 2026-08-16): dimensional kernel (Scale/Unit/Currency/CompoundUnit/Valuation/Price), algebraic operators (Expectation/Gap/Delta/GrowthRate/Effect), semantic refinements (Conflict family/ResponseMultiplier/Indexation), Wage vocabulary, three exact CASO PRUEBA scenarios, and the boxed wage-setting equation — 107 tests + 6 compile-fail boundaries green
 
-- ✓ hevm fork builds and executes EVM bytecode in Haskell (`kalecky-spec/`, Stack/Cabal/Nix builds, QuickCheck + Tasty test infrastructure) — existing
-- ✓ Foundry/Plank test harness runs Solidity tests against Plank-compiled contracts (`foundry.toml`, `test/kalecky-plank/`) — existing
-- ✓ Draft specification of the income distribution model with type hierarchy exists (`notes/INCOME_DISTRIBUTION.md`) — existing
-- ✓ Skeletal Kalecky Haskell modules exist as drafts (`kalecky-spec/src/Kalecky/` — Gap, Conflict, Effect, Units, Valuation) — existing, unproven
+- ✓ Specification of the income distribution model (`notes/INCOME_DISTRIBUTION.md`) — source of truth, existing
 
-### Active
+### Active (v2 backlog — define via /gsd:new-milestone)
 
-<!-- One type per increment; each increment = test co-designed with user, approved, then implemented -->
-
-- [ ] Dimensional foundation types: Scale (s(b,i) = b^i), Valuation (Nominal | Real PriceIndex), MoneyUnit/Currency (COP, USD), LaborUnit (Worker, LaborHour), TimeUnit; a Unit u_s(k) carries its amount k at scale s and units form a semigroup under (·)
-- [ ] CompoundUnit connectors Per (ρ) and Times (τ) with scale alignment by exact conversion; Price p(u,v) as valuation-parameterized Per-compound unit (replaces the earlier EconomicQuantity design; e.g., NominalWage is a Nominal-valued Price over Per MoneyUnit LaborUnit)
-- [ ] Gap x — orientation-preserving algebraic difference (positiveTerm/negativeTerm), requires subtraction in x
-- [ ] Expectation agent x with Agent (Household | Firm | Government | FinancialSector) — E^H[W/P], E^F[W/P]
-- [ ] Conflict as semantic refinement of Gap: ExpectationsConflict agentA agentB x, DistributionalConflict, BargainingConflict
-- [ ] Effect responder perturband ≡ ∂responder/∂perturband, with refinements: ResponseMultiplier, Elasticity (with Normalization), DistributionalEffect / NetDistributionalEffect
-- [ ] GrowthRate x and CommonGrowthRate a b (smart constructor returning Maybe)
-- [ ] Indexation target reference ≡ Effect (GrowthRate target) (GrowthRate reference)
-- [ ] Derived quantities: RealWage (NominalWage / PriceLevel), LaborProductivity (Ratio Output LaborService)
-- [ ] CASO PRUEBA scenario tests pass: Nivel→Nivel (minimum wage 20000 COP/hour), Nivel→Tasa (wage 10→12 units, +20pp), Tasa→Tasa (growth 5%→5.20%, +20bp)
-- [ ] End-goal test: nominal wage growth equation composed from the above types, property + example tests pass
+- [ ] RealWage: NominalWage deflated by a PriceLevel with numeric PriceIndex content
+- [ ] Remaining refinements: Elasticity (+Normalization), DistributionalEffect/NetDistributionalEffect, Distributional/Bargaining Conflict constructors
+- [ ] Functional income distribution matrix (ψ mechanisms, wage/profit shares, informal sector)
 
 ### Out of Scope
 
-- Plank DSL port of the type system (`kalecky-plank/`) — deferred until the Haskell types are proven; Draft.plk stays a draft
-- Solidity/EVM execution tests of Kalecky types — v1 is pure Haskell; the hevm bridge comes after the types stabilize
+- Plank DSL port — DROPPED 2026-08-16 with the EVM direction (kalecky-plank/ removed; its scale/tradeable-base design is captured in the Haskell types)
+- Solidity/EVM execution and hevm bridge — DROPPED 2026-08-16; the project is a plain Haskell library
 - Functional income distribution matrix (ψ mechanisms, wage/profit shares, informal sector W_{L_I}) — the wage equation is the v1 end goal; the ψ object is a later milestone
 - Colombia-specific mechanism taxonomy (taxes, transfers, subsidies with legal names) — notes TODO, explicitly "other agents' work" after ψ is formalized
 - Lean/EvmYul proofs of Kalecky semantics — inherited infrastructure, not part of this milestone
@@ -61,22 +48,21 @@ v1 is done when this equation (marked "This is the end goal test" in `notes/INCO
 
 ## Context
 
-- Repo is a fork/extension of Nethermind's EvmYul (Lean 4 EVM semantics) with an untracked hevm Haskell fork in `kalecky-spec/` and a Plank DSL monorepo in `lib/plank-monorepo/`.
-- The Kalecky types live inside the hevm fork at `kalecky-spec/src/Kalecky/` — deliberately kept there (user decision) to preserve the eventual bridge to hevm's symbolic execution (Z3/SMT) once the types mature.
+- As of 2026-08-16 the repo is a plain root-level Stack project (`kalecky-semantics.cabal`, lts-23.28): `src/Kalecky/**` library, `test/**` suite, `notes/` spec. The original EvmYul/hevm/Foundry/Plank scaffolding was removed (recoverable from git history before tag v1.0's successor commit).
 - Source of truth for the model: `notes/INCOME_DISTRIBUTION.md`, itself grounded in Blecker & Setterfield (2019), *Heterodox Macroeconomics*, p. 204 (conflicting-claims income distribution).
 - The notes contain a worked type-design dialogue (Spanish/English) resolving key questions: Gap is algebraic and orientation-preserving; Conflict is a semantic newtype over Gap; Effect is the fundamental derivative object and refinements add meaning, not data; NominalWage is money/labor (not a price index); Expectation is indexed by agent (or Measure agent).
-- Codebase map in `.planning/codebase/` documents the three-stack situation (Lean, Haskell, Plank/Rust) and its concerns — notably that core work is untracked in git and `Draft.plk` has blocking TODOs.
+- `.planning/codebase/` maps the ORIGINAL three-stack repo (Lean/Haskell/Plank) and is historical only after the 2026-08-16 cut.
 - Design language: algebraic structures know no economics (Gap, Effect); semantic refinements carry the economics (Conflict, ResponseMultiplier, Indexation). This separation is what makes the library reusable for Kaldor/Minsky/fiscal work.
 
 ### Current State (post v1.0)
 
-Shipped 2026-08-16: ~1,000 LOC of Kalecky Haskell source + ~1,200 LOC tests inside the `kalecky` sublibrary; `cabal test kalecky-test` (107 tests) and `scripts/check-compile-fail.sh` (6 boundaries) both green on `main` (tag v1.0). v2 backlog: RealWage/deflation, Elasticity + Distributional/Bargaining refinements, ψ distribution matrix, Plank port, hevm bridge.
+Shipped 2026-08-16: ~1,000 LOC of Kalecky Haskell source + ~1,200 LOC tests as a root-level Stack project; `stack test` (107 tests) and `scripts/check-compile-fail.sh` (6 boundaries) both green on `main` (tag v1.0). v2 backlog: RealWage/deflation, Elasticity + Distributional/Bargaining refinements, ψ distribution matrix. (Plank port and hevm bridge dropped with the EVM direction, 2026-08-16.)
 
 ## Constraints
 
 - **Process**: Test-first, collaboratively — each increment's test is co-designed with the user and approved before implementation. Not solo/YOLO work.
-- **Tech stack**: Haskell (GHC via kalecky-spec's Stack/Cabal/Nix setup), QuickCheck + Tasty already in the package's dependencies.
-- **Package location**: Types stay inside `kalecky-spec` (the hevm fork) — accept slower builds to keep the symbolic-execution bridge available.
+- **Tech stack**: Haskell, Stack lts-23.28 (GHC 9.8.4), base + QuickCheck/quickcheck-classes/tasty only.
+- **Package location**: SUPERSEDED 2026-08-16 — the repo is now a plain root-level Stack project (`kalecky-semantics.cabal`, `src/Kalecky/**`); the hevm fork, EvmYul (Lean), Foundry/Plank tooling and all submodules were removed. No EVM bridge is planned.
 - **Rigor over speed**: Research artifact — type correctness and semantic fidelity to the spec outrank delivery pace.
 
 ## Key Decisions
@@ -84,7 +70,7 @@ Shipped 2026-08-16: ~1,000 LOC of Kalecky Haskell source + ~1,200 LOC tests insi
 | Decision | Rationale | Outcome |
 |----------|-----------|---------|
 | v1 is pure Haskell; Plank/EVM/Solidity out of scope | Prove the types first; DSL/chain execution builds on a proven foundation | ✓ Good |
-| Keep types inside kalecky-spec (hevm fork) | Preserves future bridge to hevm symbolic execution | — Pending |
+| Keep types inside kalecky-spec (hevm fork) | Preserves future bridge to hevm symbolic execution | ⚠️ Reversed 2026-08-16: EVM/hevm direction discarded; repo cut to a plain Stack project |
 | Properties + examples per increment | QuickCheck laws for algebra (Gap orientation, dimensions) + CASO PRUEBA scenarios for economics | — Pending |
 | One type per increment | Scale → Units → EconomicQuantity → Gap → Conflict → Effect → ... each test-approved before implementation | — Pending |
 | End goal = boxed wage-growth equation | Explicitly marked in notes/INCOME_DISTRIBUTION.md as "the end goal test" | ✓ Good (passes: 277/900 exact) |

@@ -1,0 +1,95 @@
+cabal-version: 3.0
+name:          kalecky-semantics
+version:       1.0.0
+synopsis:      A typed system for Kaleckian income distribution — ill-formed economics must not type-check
+description:
+  Dimensional units, algebraic operators (Expectation, Gap, Delta, GrowthRate,
+  Effect), semantic refinements (Conflict, ResponseMultiplier, Indexation) and
+  the Blecker-Setterfield wage-setting equation, all exact-Rational and
+  proven by co-designed property tests plus compile-fail boundary files.
+homepage:      https://github.com/JMSBPP/kalecky-semantics
+license:       AGPL-3.0-only
+license-file:  license.txt
+author:        JMSBPP
+build-type:    Simple
+extra-doc-files:
+  README.md
+
+source-repository head
+  type:     git
+  location: https://github.com/JMSBPP/kalecky-semantics.git
+
+common shared
+  default-language: GHC2021
+  default-extensions:
+    DataKinds
+    GADTs
+    LambdaCase
+    NoFieldSelectors
+    OverloadedRecordDot
+    TypeFamilies
+  ghc-options:
+    -Wall
+    -Wno-unticked-promoted-constructors
+    -Wno-orphans
+
+library
+  import: shared
+  hs-source-dirs: src
+  exposed-modules:
+    Kalecky.Equations.WageSetting
+    Kalecky.Operators.Conflict
+    Kalecky.Operators.Delta
+    Kalecky.Operators.Effect
+    Kalecky.Operators.Expectation
+    Kalecky.Operators.Gap
+    Kalecky.Operators.GrowthRate
+    Kalecky.Operators.Indexation
+    Kalecky.Operators.ResponseMultiplier
+    Kalecky.Types.Currency
+    Kalecky.Types.Measure
+    Kalecky.Types.Numerics
+    Kalecky.Types.Prices.Price
+    Kalecky.Types.Prices.PriceIndex
+    Kalecky.Types.Prices.Wage
+    Kalecky.Types.Valuation
+    Kalecky.Types.Units.CompoundUnit
+    Kalecky.Types.Units.LaborUnit
+    Kalecky.Types.Units.MoneyUnit
+    Kalecky.Types.Units.TimeUnit
+    Kalecky.Types.Units.Unit
+  build-depends:
+    base >= 4.19 && < 5
+
+test-suite kalecky-test
+  import: shared
+  type: exitcode-stdio-1.0
+  hs-source-dirs: test
+  main-is: Main.hs
+  other-modules:
+    Kalecky.CasoPruebaSpec
+    Kalecky.Equations.WageSettingSpec
+    Kalecky.Operators.ConflictSpec
+    Kalecky.Operators.DeltaSpec
+    Kalecky.Operators.EffectSpec
+    Kalecky.Operators.ExpectationSpec
+    Kalecky.Operators.GapSpec
+    Kalecky.Operators.GrowthRateSpec
+    Kalecky.Operators.RefinementSpec
+    Kalecky.Types.NumericsSpec
+    Kalecky.Types.Prices.PriceSpec
+    Kalecky.Types.Prices.WageSpec
+    Kalecky.Types.ValuationSpec
+    Kalecky.Types.Units.CompoundUnitSpec
+    Kalecky.Types.Units.LaborUnitSpec
+    Kalecky.Types.Units.MoneyUnitSpec
+    Kalecky.Types.Units.TimeUnitSpec
+    Kalecky.Types.Units.UnitSpec
+  build-depends:
+    base,
+    kalecky-semantics,
+    QuickCheck,
+    quickcheck-classes,
+    tasty,
+    tasty-hunit,
+    tasty-quickcheck
