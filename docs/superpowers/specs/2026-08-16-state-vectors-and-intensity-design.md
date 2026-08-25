@@ -28,7 +28,7 @@ src/Kalecky/Types/
 ├── Groups/Capital.hs         data CapitalGroup    = KF | KK | KMC        (MC: land rental)
 ├── Groups/Labor.hs           data LaborGroup      = LI | LF | LML
 ├── Groups/Education.hs       data EducationGroup  = EPublic | EPrivate
-├── Groups/Region.hs          data Region = <user-supplied list>
+├── Groups/Region.hs          data Region = …   OPEN INPUT: the user supplies the region list before implementation
 ├── Panel/Period.hs           Period, next, ordering within granularity
 ├── Panel/Panel.hs            Panel g t v — economics-free rectangular map with queries
 ├── Stocks/StateVector.hs     StateVector g b + reconciling constructor + share
@@ -52,7 +52,9 @@ compareP :: Period -> Period -> Maybe Ordering  -- Nothing across granularities
 ```haskell
 data Panel g t v                                 -- rectangular; ctor hidden
 panel  :: (Bounded g, Enum g, Ord g, Ord t) => [t] -> (g -> t -> v) -> Panel g t v
-window :: … -> raw -> Maybe (Panel g t v)        -- picks/validates a complete block; the ONLY ragged-aware function
+window :: (Bounded g, Enum g, Ord g, Ord t) => [t] -> [(g, t, v)] -> Maybe (Panel g t v)
+  -- the ONLY ragged-aware function: Just iff every (group, period) in the requested
+  -- period list is present exactly once; observations outside the list are ignored
 cell   :: g -> t -> Panel g t v -> Maybe v       -- Nothing only for unknown t
 row    :: g -> Panel g t v -> [(t, v)]
 column :: t -> Panel g t v -> Maybe (g -> v)
