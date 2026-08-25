@@ -1,6 +1,6 @@
 # State Vectors, Stocks and Intensity — Design
 
-**Date:** 2026-08-16 · **Source:** `src/TODO.md` (items 2+) · **Status:** approved in brainstorming, awaiting spec review
+**Date:** 2026-08-16 · **Source:** `src/TODO.md` (items 2+) · **Status:** approved 2026-08-16
 
 ## Purpose
 
@@ -17,7 +17,7 @@ Add reconciled, partition-indexed stock panels to the kernel so that quantities 
 | Cells | Kernel units (`Unit b`); technology `A` via new dimensionless `IndexBasis` |
 | Intensity base | Any stock constructed with role `Base`; denominator must be `Base` (type-enforced); numerator `Level` |
 | Cell name | `Density b c` — quantity of `b` per unit of base `c` |
-| Comments | Each new module's comments are ONLY the TODO's math in `\[ … \]` notation |
+| Comments | Each new module's comments are ONLY math in `\[ … \]` notation: the TODO's equations where they exist; derived from this design (reconciliation identity, density, ordering) for Period/Panel/Density/IndexBasis |
 
 ## Module placement (tree is design; one concept per file)
 
@@ -28,7 +28,7 @@ src/Kalecky/Types/
 ├── Groups/Capital.hs         data CapitalGroup    = KF | KK | KMC        (MC: land rental)
 ├── Groups/Labor.hs           data LaborGroup      = LI | LF | LML
 ├── Groups/Education.hs       data EducationGroup  = EPublic | EPrivate
-├── Groups/Region.hs          data Region = …   OPEN INPUT: the user supplies the region list before implementation
+├── Groups/Region.hs          data Region = Central | Periphery
 ├── Panel/Period.hs           Period, next, ordering within granularity
 ├── Panel/Panel.hs            Panel g t v — economics-free rectangular map with queries
 ├── Stocks/StateVector.hs     StateVector g b + reconciling constructor + share
