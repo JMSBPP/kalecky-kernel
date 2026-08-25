@@ -36,19 +36,28 @@ data Stock (r :: Role) g b = Stock [Period] (Map Period (StateVector g b))
   deriving (Eq, Show)
 
 stock :: [(Period, StateVector g b)] -> Maybe (Stock r g b)
-stock = undefined
+stock [] = Nothing
+stock ps
+  | length (Map.keys m) /= length ps = Nothing
+  | any ((/= g0) . granularity) periods' = Nothing
+  | map ordinal periods' /= take (length periods') [ordinal (head periods') ..] = Nothing
+  | otherwise = Just (Stock periods' m)
+  where
+    m = Map.fromList ps
+    periods' = sortOn ordinal (Map.keys m)
+    g0 = granularity (head periods')
 
 point :: Period -> StateVector g b -> Stock r g b
-point = undefined
+point p v = Stock [p] (Map.singleton p v)
 
 at :: Period -> Stock r g b -> Maybe (StateVector g b)
-at = undefined
+at p (Stock _ m) = Map.lookup p m
 
 series :: Ord g => g -> Stock r g b -> [(Period, Unit b)]
-series = undefined
+series g (Stock ps m) = [(p, component g (m Map.! p)) | p <- ps]
 
 totals :: Stock r g b -> [(Period, Unit b)]
-totals = undefined
+totals (Stock ps m) = [(p, total (m Map.! p)) | p <- ps]
 
 toPanel :: (Bounded g, Enum g, Ord g) => Stock r g b -> Panel g Period (Unit b)
-toPanel = undefined
+toPanel (Stock ps m) = panel ps (\g p -> component g (m Map.! p))
