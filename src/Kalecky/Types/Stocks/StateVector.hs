@@ -24,13 +24,18 @@ data StateVector g b = StateVector (Map g (Unit b)) (Unit b)
   deriving (Eq, Show)
 
 stateVector :: (Bounded g, Enum g, Ord g) => (g -> Unit b) -> Unit b -> Maybe (StateVector g b)
-stateVector = undefined
+stateVector f tot
+  | value tot > 0 && sum (map (value . f) gs) == value tot =
+      Just (StateVector (Map.fromList [(g, f g) | g <- gs]) tot)
+  | otherwise = Nothing
+  where
+    gs = [minBound .. maxBound]
 
 component :: Ord g => g -> StateVector g b -> Unit b
-component = undefined
+component g (StateVector m _) = m Map.! g
 
 total :: StateVector g b -> Unit b
-total = undefined
+total (StateVector _ t) = t
 
 share :: Ord g => g -> StateVector g b -> Rational
-share = undefined
+share g v = toInteger (value (component g v)) % toInteger (value (total v))
