@@ -29,21 +29,33 @@ newtype Density b c = Density (Per b c)
   deriving (Eq, Show)
 
 densityRatio :: Density b c -> Per b c
-densityRatio = undefined
+densityRatio (Density r) = r
 
 densityValue :: Density b c -> Rational
-densityValue = undefined
+densityValue (Density r) =
+  toInteger (value (numerator r)) % toInteger (value (denominator r))
 
 data Intensity g h b c = Intensity (Stock Level g b) (Stock Base h c)
 
 intensity :: Stock Level g b -> Stock Base h c -> Maybe (Intensity g h b c)
-intensity = undefined
+intensity x b
+  | map fst (totals x) == map fst (totals b) = Just (Intensity x b)
+  | otherwise = Nothing
 
 totalDensity :: Period -> Intensity g h b c -> Maybe (Density b c)
-totalDensity = undefined
+totalDensity p (Intensity x b) = do
+  vx <- at p x
+  vb <- at p b
+  pure (Density (per (total vx) (total vb)))
 
 groupDensity :: Ord g => g -> Period -> Intensity g h b c -> Maybe (Density b c)
-groupDensity = undefined
+groupDensity g p (Intensity x b) = do
+  vx <- at p x
+  vb <- at p b
+  pure (Density (per (component g vx) (total vb)))
 
 matchedDensity :: Ord g => g -> Period -> Intensity g g b c -> Maybe (Density b c)
-matchedDensity = undefined
+matchedDensity g p (Intensity x b) = do
+  vx <- at p x
+  vb <- at p b
+  pure (Density (per (component g vx) (component g vb)))
