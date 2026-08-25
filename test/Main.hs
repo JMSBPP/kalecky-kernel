@@ -17,6 +17,7 @@ import Kalecky.Types.Panel.PanelSpec (panelTests)
 import Kalecky.Types.Panel.PeriodSpec (periodTests)
 import Kalecky.Types.Prices.PriceSpec (priceTests)
 import Kalecky.Types.Prices.WageSpec (wageTests)
+import Kalecky.Types.Stocks.StateVectorSpec (stateVectorTests)
 import Kalecky.Types.Units.CompoundUnitSpec (compoundUnitTests)
 import Kalecky.Types.Units.IndexUnitSpec (indexUnitTests)
 import Kalecky.Types.ValuationSpec (valuationTests)
@@ -53,4 +54,5 @@ tests =
     , groupsTests
     , periodTests
     , panelTests
+    , stateVectorTests
     ]
