@@ -45,6 +45,7 @@ library
     Kalecky.Operators.Gap
     Kalecky.Operators.GrowthRate
     Kalecky.Operators.Indexation
+    Kalecky.Operators.Intensity
     Kalecky.Operators.ResponseMultiplier
     Kalecky.Types.Currency
     Kalecky.Types.Groups.Capital
@@ -87,6 +88,7 @@ test-suite kalecky-test
     Kalecky.Operators.ExpectationSpec
     Kalecky.Operators.GapSpec
     Kalecky.Operators.GrowthRateSpec
+    Kalecky.Operators.IntensitySpec
     Kalecky.Operators.RefinementSpec
     Kalecky.Types.NumericsSpec
     Kalecky.Types.Panel.PanelSpec

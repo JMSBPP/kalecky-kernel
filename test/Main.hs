@@ -10,6 +10,7 @@ import Kalecky.Operators.EffectSpec (effectTests)
 import Kalecky.Operators.ExpectationSpec (expectationTests)
 import Kalecky.Operators.GapSpec (gapTests)
 import Kalecky.Operators.GrowthRateSpec (growthRateTests)
+import Kalecky.Operators.IntensitySpec (intensityTests)
 import Kalecky.Operators.RefinementSpec (refinementTests)
 import Kalecky.Types.Groups.GroupsSpec (groupsTests)
 import Kalecky.Types.NumericsSpec (scaleTests)
@@ -57,4 +58,5 @@ tests =
     , panelTests
     , stateVectorTests
     , stockTests
+    , intensityTests
     ]
