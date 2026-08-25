@@ -11,4 +11,6 @@ data IndexBasis = Index
   deriving (Eq, Ord, Show, Enum, Bounded)
 
 instance HasScale IndexBasis where
-  scaleOf Index = undefined
+  scaleOf Index = case scale 1 1 of
+    Just s -> s
+    Nothing -> error "unreachable: base 1 >= 1"
