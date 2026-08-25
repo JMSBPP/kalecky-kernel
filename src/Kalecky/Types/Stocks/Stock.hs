@@ -36,16 +36,15 @@ data Stock (r :: Role) g b = Stock [Period] (Map Period (StateVector g b))
   deriving (Eq, Show)
 
 stock :: [(Period, StateVector g b)] -> Maybe (Stock r g b)
-stock [] = Nothing
-stock ps
-  | length (Map.keys m) /= length ps = Nothing
-  | any ((/= g0) . granularity) periods' = Nothing
-  | map ordinal periods' /= take (length periods') [ordinal (head periods') ..] = Nothing
-  | otherwise = Just (Stock periods' m)
+stock ps = case sortOn ordinal (Map.keys m) of
+  [] -> Nothing
+  periods'@(p0 : _)
+    | length periods' /= length ps -> Nothing
+    | any ((/= granularity p0) . granularity) periods' -> Nothing
+    | map ordinal periods' /= take (length periods') [ordinal p0 ..] -> Nothing
+    | otherwise -> Just (Stock periods' m)
   where
     m = Map.fromList ps
-    periods' = sortOn ordinal (Map.keys m)
-    g0 = granularity (head periods')
 
 point :: Period -> StateVector g b -> Stock r g b
 point p v = Stock [p] (Map.singleton p v)
