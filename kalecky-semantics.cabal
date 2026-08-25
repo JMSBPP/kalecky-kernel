@@ -47,6 +47,11 @@ library
     Kalecky.Operators.Indexation
     Kalecky.Operators.ResponseMultiplier
     Kalecky.Types.Currency
+    Kalecky.Types.Groups.Capital
+    Kalecky.Types.Groups.Education
+    Kalecky.Types.Groups.Labor
+    Kalecky.Types.Groups.Population
+    Kalecky.Types.Groups.Region
     Kalecky.Types.Measure
     Kalecky.Types.Numerics
     Kalecky.Types.Prices.Price
@@ -70,6 +75,7 @@ test-suite kalecky-test
   other-modules:
     Kalecky.CasoPruebaSpec
     Kalecky.Equations.WageSettingSpec
+    Kalecky.Types.Groups.GroupsSpec
     Kalecky.Operators.ConflictSpec
     Kalecky.Operators.DeltaSpec
     Kalecky.Operators.EffectSpec
