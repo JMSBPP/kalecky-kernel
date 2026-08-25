@@ -54,6 +54,7 @@ library
     Kalecky.Types.Groups.Region
     Kalecky.Types.Measure
     Kalecky.Types.Numerics
+    Kalecky.Types.Panel.Panel
     Kalecky.Types.Panel.Period
     Kalecky.Types.Prices.Price
     Kalecky.Types.Prices.PriceIndex
@@ -66,7 +67,8 @@ library
     Kalecky.Types.Units.TimeUnit
     Kalecky.Types.Units.Unit
   build-depends:
-    base >= 4.19 && < 5
+    base >= 4.19 && < 5,
+    containers
 
 test-suite kalecky-test
   import: shared
@@ -85,6 +87,7 @@ test-suite kalecky-test
     Kalecky.Operators.GrowthRateSpec
     Kalecky.Operators.RefinementSpec
     Kalecky.Types.NumericsSpec
+    Kalecky.Types.Panel.PanelSpec
     Kalecky.Types.Panel.PeriodSpec
     Kalecky.Types.Prices.PriceSpec
     Kalecky.Types.Prices.WageSpec
