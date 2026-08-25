@@ -60,6 +60,7 @@ library
     Kalecky.Types.Prices.PriceIndex
     Kalecky.Types.Prices.Wage
     Kalecky.Types.Stocks.StateVector
+    Kalecky.Types.Stocks.Stock
     Kalecky.Types.Valuation
     Kalecky.Types.Units.CompoundUnit
     Kalecky.Types.Units.IndexUnit
@@ -93,6 +94,7 @@ test-suite kalecky-test
     Kalecky.Types.Prices.PriceSpec
     Kalecky.Types.Prices.WageSpec
     Kalecky.Types.Stocks.StateVectorSpec
+    Kalecky.Types.Stocks.StockSpec
     Kalecky.Types.ValuationSpec
     Kalecky.Types.Units.CompoundUnitSpec
     Kalecky.Types.Units.IndexUnitSpec
