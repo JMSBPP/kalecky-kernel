@@ -18,16 +18,18 @@ data Period = Period TimeBasis Natural
   deriving (Eq, Ord, Show)
 
 period :: TimeBasis -> Natural -> Period
-period = undefined
+period = Period
 
 granularity :: Period -> TimeBasis
-granularity = undefined
+granularity (Period g _) = g
 
 ordinal :: Period -> Natural
-ordinal = undefined
+ordinal (Period _ n) = n
 
 next :: Period -> Period
-next = undefined
+next (Period g n) = Period g (n + 1)
 
 compareP :: Period -> Period -> Maybe Ordering
-compareP = undefined
+compareP (Period g n) (Period h m)
+  | g == h = Just (compare n m)
+  | otherwise = Nothing
