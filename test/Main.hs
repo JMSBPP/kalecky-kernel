@@ -13,6 +13,7 @@ import Kalecky.Operators.GrowthRateSpec (growthRateTests)
 import Kalecky.Operators.RefinementSpec (refinementTests)
 import Kalecky.Types.Groups.GroupsSpec (groupsTests)
 import Kalecky.Types.NumericsSpec (scaleTests)
+import Kalecky.Types.Panel.PeriodSpec (periodTests)
 import Kalecky.Types.Prices.PriceSpec (priceTests)
 import Kalecky.Types.Prices.WageSpec (wageTests)
 import Kalecky.Types.Units.CompoundUnitSpec (compoundUnitTests)
@@ -49,4 +50,5 @@ tests =
     , wageSettingTests
     , indexUnitTests
     , groupsTests
+    , periodTests
     ]

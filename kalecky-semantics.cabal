@@ -54,6 +54,7 @@ library
     Kalecky.Types.Groups.Region
     Kalecky.Types.Measure
     Kalecky.Types.Numerics
+    Kalecky.Types.Panel.Period
     Kalecky.Types.Prices.Price
     Kalecky.Types.Prices.PriceIndex
     Kalecky.Types.Prices.Wage
@@ -84,6 +85,7 @@ test-suite kalecky-test
     Kalecky.Operators.GrowthRateSpec
     Kalecky.Operators.RefinementSpec
     Kalecky.Types.NumericsSpec
+    Kalecky.Types.Panel.PeriodSpec
     Kalecky.Types.Prices.PriceSpec
     Kalecky.Types.Prices.WageSpec
     Kalecky.Types.ValuationSpec
