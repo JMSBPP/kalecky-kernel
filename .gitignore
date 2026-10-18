@@ -1,4 +1,13 @@
-.stack-work/
-dist-newstyle/
-*.hi
-*.o
+# GAMS / Idris build artifacts
+src/build/
+build/
+*.lst
+*.log
+.idrisCommit
+
+# Agent session outputs
+.agent-out/
+
+# Editor / OS
+.DS_Store
+*~
