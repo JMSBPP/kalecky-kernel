@@ -7,9 +7,9 @@ import Data.Vect
 ||| ------------------------PRIMAL -----------------------------------
 -- > Error: While processing constructor ProductionFactors. When unifying:
 -- data Technology: Type
--- data CapitalStock: Type
+-- data Capital: Type
 -- data Labor: Type
--- data ProductionFactors: Technology -> CapitalStock -> Labor -> Vect
+-- data ProductionFactors: Technology -> Capital -> Labor -> Vect
 
 
 --> Error: pre-req of the error above
