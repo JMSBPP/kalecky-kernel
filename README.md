@@ -24,8 +24,3 @@ just type   # pack typecheck kalecky-types.ipkg
 ```
 
 Listings go to `src/build/`.
-
-## Docs
-
-- GAMS 54: https://www.gams.com/54/docs/
-- Idris 2: https://idris2.readthedocs.io/en/latest/
