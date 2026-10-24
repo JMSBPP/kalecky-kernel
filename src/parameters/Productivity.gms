@@ -6,10 +6,6 @@ $onText
 $offText
 
 $if not declared Labor $include parameters/Production.gms
-Parameter LaborProductivity(Labor);
-Parameter CapitalProductivity(Capital);
-Parameter TotalFactorProductivity(Capital, Labor);
-
 $onText
 ================================================
 	-------> MACROS <-----------------
@@ -34,3 +30,8 @@ $onText
 	 \((\mathrm{a}_L, \mathrm{a}_K, \mathrm{a}_{K,L})\)
 ================================================
 $offText
+
+Parameter LaborProductivity(Labor);
+Parameter CapitalProductivity(Capital);
+Parameter TotalFactorProductivity(Capital, Labor);
+

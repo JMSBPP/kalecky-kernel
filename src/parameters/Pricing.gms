@@ -20,6 +20,9 @@ $macro setPrice(cost,markup,totalProductivity) markup*averageUnitCost(cost)/tota
 $onText
 ===========================================================
 	---------> OUTPUTS <--------------
-		   \(\mathrm{p}\) declared in variables/Pricing.gms
+		   \(\mathrm{p}\) 
 ===========================================================
 $offText
+
+
+
